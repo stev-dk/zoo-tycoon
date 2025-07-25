@@ -19,7 +19,17 @@ function animal_data(animal)
     print(string.format("Needs cleaning: %s Needs food: %s", tostring(animal.needsCleaning), tostring(animal.needsFood)))
 end
 
+function zoo_keeper(zoo_keeper)
+    print(zoo_keeper.name)
+    io.write("Current assigned animals: ")
+    for i, animal in ipairs(zoo_keeper.assignedAnimals) do
+        io.write(animal.name .. ", ")
+    end
+    io.write("\n")
+end
+
 return {
     animal_description = animal_description,
-    animal_data = animal_data
+    animal_data = animal_data,
+    zoo_keeper = zoo_keeper
 }

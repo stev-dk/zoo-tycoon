@@ -1,3 +1,8 @@
+local function randomName()
+    -- Create a random name
+    return "Random Name"
+end
+
 local zooData = {
 
     animals = {
@@ -9,17 +14,31 @@ local zooData = {
         name = "Unnamed",
         cleaningInterval = 5,
         eatingInterval = 5,
+        feedingCost = 30,
         happiness = 100
     },
 
     elephant = {
         cleaningInterval = 12,
-        eatingInterval = 8
+        eatingInterval = 8,
+        feedingCost = 25
     },
 
     tiger = {
         cleaningInterval = 24,
-        eatingInterval = 5
+        eatingInterval = 5,
+        feedingCost = 40
+    },
+
+    zoo_keeper = {
+        type = "ZooKeeper",
+        name = randomName(),
+        maxAnimals = 2,
+        wage = 50,
+
+        error_msg = {
+            max_animals_reached = "This ZooKeeper cannot take care of any more animals."
+        }
     }
 }
 

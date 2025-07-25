@@ -9,6 +9,7 @@ function Animal:new(o)
     o.needsCleaning = o.needsCleaning or false
     o.cleaningInterval = o.cleaningInterval or data.default.cleaningInterval
     o.eatingInterval = o.eatingInterval or data.default.eatingInterval
+    o.feedingCost = o.feedingCost or data.default.feedingCost
     o.happiness = o.happiness or data.default.happiness
     setmetatable(o, self)
     self.__index = self
@@ -21,6 +22,7 @@ function Elephant:new(o)
     o = Animal.new(self, o)
     o.cleaningInterval = data.elephant.cleaningInterval
     o.eatingInterval = data.elephant.eatingInterval
+    o.feedingCost = data.elephant.feedingCost
     return o
 end
 
@@ -30,12 +32,12 @@ function Tiger:new(o)
     o = Animal.new(self, o)
     o.cleaningInterval = data.tiger.cleaningInterval
     o.eatingInterval = data.tiger.eatingInterval
+    o.feedingCost = data.tiger.feedingCost
     return o
 end
 
 return {
     Animal = Animal,
     Elephant = Elephant,
-    Tiger = Tiger,
-    debugger = debugger
+    Tiger = Tiger
 }
