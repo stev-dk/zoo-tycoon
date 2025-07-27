@@ -15,12 +15,13 @@ local zooData = {
         cleaningInterval = 5,
         eatingInterval = 5,
         feedingCost = 30,
-        happiness = 100
+        happiness = 100,
+        startingCast = 500
     },
 
     elephant = {
         cleaningInterval = 12,
-        eatingInterval = 8,
+        eatingInterval = 12,
         feedingCost = 25
     },
 

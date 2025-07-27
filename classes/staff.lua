@@ -1,4 +1,4 @@
-data = require "data"
+data = require "data.data"
 
 ZooKeeper = { __type = data.zoo_keeper.type }
 function ZooKeeper:new(o)
@@ -20,12 +20,12 @@ function ZooKeeper:assignAnimal(animal)
     end
 
     table.insert(self.assignedAnimals, animal)
+    animal.zoo_keeper = self
 end
 
-function ZooKeeper:feed(animal)
-    local money = 1000 -- add ZooManager to keep track of money
-    if money >= animal.feedingCost then
-        money = money - animal.feedingCost -- add this logic to ZooManager, perhaps even the if statement
+function ZooKeeper:feed(animal, zoo_manager)
+    local pay = zoo_manager:pay(animal.feedingCost)
+    if pay then
         animal.needsFood = false
     end
 end
@@ -34,14 +34,14 @@ function ZooKeeper:clean(animal)
     animal.needsCleaning = false
 end
 
-function ZooKeeper:checkAnimals()
+function ZooKeeper:checkAnimals(zoo_manager)
     for i, animal in ipairs(self.assignedAnimals) do
         if animal.needsCleaning then
             self:clean(animal)
         end
 
         if animal.needsFood then
-            self:feed(animal)
+            self:feed(animal, zoo_manager)
         end
     end
 end

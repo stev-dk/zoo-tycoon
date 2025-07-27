@@ -28,8 +28,13 @@ function zoo_keeper(zoo_keeper)
     io.write("\n")
 end
 
+function show_money(zoo_manager)
+    print(zoo_manager.money)
+end
+
 return {
     animal_description = animal_description,
     animal_data = animal_data,
-    zoo_keeper = zoo_keeper
+    zoo_keeper = zoo_keeper,
+    show_money = show_money
 }
