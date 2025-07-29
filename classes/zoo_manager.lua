@@ -1,4 +1,7 @@
 data = require "data.data"
+visitors = require "classes.visitors"
+
+visitors_class = visitors:new()
 
 ZooManager = { __type = "ZooManager" }
 
@@ -7,7 +10,8 @@ function ZooManager:create(this)
     this.name = "Zoo World"
     this.animals = {}
     this.zoo_keepers = {}
-    this.money = data.default.startingCast
+    this.money = data.default.startingCash
+    this.startingDay = data.default.startingDay
     setmetatable(this, self)
     self.__index = self
     return this
@@ -31,25 +35,46 @@ function ZooManager:addAnimal(animal)
 end
 
 function ZooManager:dailyReport()
-    print("Gold: " .. self.money)
+    local unhappy_animals = {}
+    local total_happiness = 0
+    for i, animal in ipairs(self.animals) do
+        total_happiness = total_happiness + animal.happiness
+        if animal.happiness < 100 then
+            table.insert(unhappy_animals, animal)
+        end
+    end
+
+    local average_happiness = (total_happiness / #self.animals)
+
+    -- DAILY INCOME
+    local daily_income = visitors_class:dailyIncome(average_happiness, #self.animals)
+    print("-----------------------------------------\nDaily income: " .. daily_income)
+    self.money = self.money + daily_income
+
+    self.startingDay = self.startingDay + 1
+    print(string.format("Day: %d - Money: %d", self.startingDay, self.money))
+
+    if #unhappy_animals > 0 then
+        print(string.format("Unhappy animals: %d - Average happiness %d", #unhappy_animals, average_happiness))
+    end
 end
 
 function ZooManager:dailyRoutine()
     -- ZooKeepers Checks Animals
     for i, zoo_keeper in ipairs(self.zoo_keepers) do
         zoo_keeper:checkAnimals(self)
+        self:pay(zoo_keeper.wage)
     end
 
     -- Animals Ticks
-    io.write("Current animals in zoo: ")
     for i, animal in ipairs(self.animals) do
-        animal:dailyTick(self)
-        io.write(animal.name .. ", ")
+        local ran_away = animal:dailyTick(self)
+        -- If animal runs away
+        if ran_away then
+            io.write("You payed a fine of " .. data.default.runAwayFine .. "$\n")
+            self.money = self.money - data.default.runAwayFine
+        end
     end
-    print("\n")
-
-    -- Daily income
-    self.money = self.money + 0
 end
 
 return ZooManager

@@ -16,7 +16,15 @@ local zooData = {
         eatingInterval = 5,
         feedingCost = 30,
         happiness = 100,
-        startingCast = 500
+        startingCash = 500,
+        startingDay = 0,
+        runAwayFine = 2000
+    },
+
+    visitors = {
+        entryCost = 25,
+        potentialVisitorsPerAnimal = 20,
+
     },
 
     elephant = {

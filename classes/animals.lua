@@ -18,14 +18,15 @@ function Animal:new(o)
 end
 
 function Animal:dailyTick(zoo_manager)
+    local ran_away = false
+
     if self.needsFood then
         self.happiness = self.happiness - self.eatingInterval
-        -- print(string.format("%s is hungry. Happiness is %d", self.name, self.happiness))
     end
 
     if self.happiness < 50 then
-        -- TODO set a flag, for animals that ran away
-        print("\n " .. self.name .. " ran away!")
+        ran_away = true
+        print(self.name .. " ran away!")
 
         -- Delete animal from zoo manager
         for i, animal in ipairs(zoo_manager.animals) do
@@ -51,6 +52,7 @@ function Animal:dailyTick(zoo_manager)
 
     self.needsFood = true
     self.needsCleaning = true
+    return ran_away
 end
 
 Elephant = Animal:new()
