@@ -18,7 +18,9 @@ local zooData = {
         happiness = 100,
         startingCash = 500,
         startingDay = 0,
-        runAwayFine = 2000
+        runAwayFine = 5000,
+        dailyRent = 1000,
+        condition = 1000
     },
 
     visitors = {
@@ -39,15 +41,25 @@ local zooData = {
         feedingCost = 40
     },
 
+    staff = {
+        name = randomName(),
+        wage = 50
+    },
+
     zoo_keeper = {
         type = "ZooKeeper",
-        name = randomName(),
         maxAnimals = 2,
         wage = 50,
 
         error_msg = {
             max_animals_reached = "This ZooKeeper cannot take care of any more animals."
         }
+    },
+
+    janitor = {
+        type = "Janitor",
+        wage = 50,
+        maintenancePoints = 100,
     }
 }
 

@@ -1,14 +1,23 @@
 data = require "data.data"
 
-ZooKeeper = { __type = data.zoo_keeper.type }
-function ZooKeeper:new(o)
+Staff = { __type = "Staff" }
+function Staff:new(o)
     o = o or {}
-    o.name = o.name or data.zoo_keeper.name
-    o.maxAnimals = o.maxAnimals or data.zoo_keeper.maxAnimals
-    o.wage = o.wage or data.zoo_keeper.wage
-    o.assignedAnimals = {}  -- new zoo keepers always comes with no assigned animals
+    o.name = o.name or data.staff.name
+    o.wage = o.wage or data.staff.wage
     setmetatable(o, self)
     self.__index = self
+    return o
+end
+
+ZooKeeper = Staff:new()
+
+ZooKeeper = { __type = data.zoo_keeper.type }
+function ZooKeeper:new(o)
+    o = Staff:new(self, o)
+    o.maxAnimals = o.maxAnimals or data.zoo_keeper.maxAnimals
+    o.wage = data.zoo_keeper.wage
+    o.assignedAnimals = {}  -- new zoo keepers always comes with no assigned animals
     return o
 end
 
@@ -46,6 +55,25 @@ function ZooKeeper:checkAnimals(zoo_manager)
     end
 end
 
+Janitor = Staff:new(o)
+Janitor = { __type = data.janitor.type }
+function Janitor:new(o)
+    o = Staff:new(self, o)
+    o.wage = data.janitor.wage
+    o.maintenancePoints = o.maintenancePoints or data.janitor.maintenancePoints
+    return o
+end
+
+function Janitor:dailyMaintenance(zoo_manager)
+    local maintenance = zoo_manager.dailyMaintenanceNeeded - self.maintenancePoints
+    if maintenance > 0 then
+        zoo_manager.dailyMaintenanceNeeded = maintenance
+    else
+        zoo_manager.dailyMaintenanceNeeded = 0
+    end
+end
+
 return {
-    ZooKeeper = ZooKeeper
+    ZooKeeper = ZooKeeper,
+    Janitor = Janitor
 }
