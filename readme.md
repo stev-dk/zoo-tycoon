@@ -8,6 +8,8 @@ You own a zoo with two animals, and a zoo keeper. You have to manage the zoo.
 If the animals happiness or maintenance gets too low they will run away.
 Happier animals and higher maintained zoo, attracts more visitors.
 
+This project is currently on pause.
+
 FINISHED TASKS:
 
 Create Animal classes.
